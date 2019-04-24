@@ -61,6 +61,7 @@ function generateTitleLinks() {
     /* for each article */
     const articles = document.querySelectorAll(optArticleSelector);
     console.log('Articles:', articles);
+    let html = '';
     for (let article of articles) {
 
         /* get the article id */
@@ -78,12 +79,11 @@ function generateTitleLinks() {
         console.log('Link HTML:', linkHTML);
 
         /* insert link into titleList */
-        //titleList.innerHTML = titleList.innerHTML + linkHTML;
-        titleList.insertAdjacentHTML('beforeend', linkHTML);
-        console.log('titleList:', titleList);
-
+        html = html + linkHTML;
+        console.log('html:', html);
 
     }
+    titleList.innerHTML = html;
 }
 
 generateTitleLinks();
