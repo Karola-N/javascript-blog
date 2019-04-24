@@ -78,8 +78,11 @@ function generateTitleLinks() {
         console.log('Link HTML:', linkHTML);
 
         /* insert link into titleList */
-        titleList.innerHTML = titleList.innerHTML + linkHTML;
+        //titleList.innerHTML = titleList.innerHTML + linkHTML;
+        titleList.insertAdjacentHTML('beforeend', linkHTML);
         console.log('titleList:', titleList);
+
+
     }
 }
 
