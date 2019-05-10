@@ -66,6 +66,7 @@ body {
     background: $color-light;
     margin-right: 10px;
     padding: 40px;
+    padding-right: 20px;
     border: 1px solid $color-dark;
     border-radius: 5px;
 }
@@ -112,9 +113,14 @@ body {
 /* Post */
 
 .post {
-    display: none;
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
     &.active {
-        display: block;
+        opacity: 1;
+        z-index: 100;
+        padding-right: 1em;
+        position: absolute;
     }
 }
 
@@ -127,4 +133,24 @@ body {
     p {
         margin: 0 10px 0 0;
     }
+}
+
+.inner {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    overflow-y: scroll;
+    position: relative;
+}
+
+::-webkit-scrollbar {
+    width: 0.6em;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
 }
