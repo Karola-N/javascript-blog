@@ -229,14 +229,13 @@ function authorClickHandler(event) {
 }
 
 function addClickListenersToAuthors() {
-    /* find all links to tags */
     const authors = document.querySelectorAll('.authors a');
     /* START LOOP: for each link */
     for (let author of authors) {
         /* add tagClickHandler as event listener for that link */
-        link.addEventListener('click', authorClickHandler);
+        author.addEventListener('click', authorClickHandler);
         /* END LOOP: for each link */
     }
 }
 
-addClickListenersToTags();
+addClickListenersToAuthors();
