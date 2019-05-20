@@ -88,6 +88,16 @@ function generateTitleLinks(customSelector = '') {
     }
 }
 
+function calculateTagsParams(tags) {
+    const params = { min: 999999, max: 0 };
+    for (let tag in tags) {
+        console.log(tag + ' is used ' + tags[tag] + ' times');
+        params.max = Math.max(tags[tag], params.max),
+            params.min = Math.min(tags[tag], params.min);
+    }
+    return params;
+}
+
 function generateTags() {
     /* [NEW] create a new variable allTags with an empty object */
     let allTags = {};
@@ -136,6 +146,8 @@ function generateTags() {
     const tagList = document.querySelector('.tags');
     /* [NEW] create variable for all links HTML code */
     let allTagsHTML = '';
+    const tagsParams = calculateTagsParams(allTags);
+    console.log('tagsParams: ', tagsParams);
     /* [NEW] START LOOP: for each tag in allTAgs: */
     for (let tag in allTags) {
         /* [NEW] generate code of a link and add it to all TagsHTML */
@@ -144,7 +156,7 @@ function generateTags() {
     }
     /* [NEW] add html from allTAgsHTML to tagList */
     tagList.innerHTML = allTagsHTML;
-    console.log('tagList2a: ', tagList);
+    console.log('sidebarTagList: ', tagList);
 }
 
 function tagClickHandler(event) {
