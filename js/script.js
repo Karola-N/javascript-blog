@@ -4,7 +4,8 @@ const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optArticleAuthorSelector = '.post-author';
+    optArticleAuthorSelector = '.post-author',
+    optTagsListSelector = '.tags.list'
 
 function titleClickHandler(event) {
     //console.log('Link was clicked!');
@@ -88,6 +89,8 @@ function generateTitleLinks(customSelector = '') {
 }
 
 function generateTags() {
+    /* [NEW] create a new variable allTags with an empty object */
+    let allTags = {};
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
     console.log('Articles:', articles);
@@ -114,6 +117,14 @@ function generateTags() {
             /* add generated code to html variable */
             html = html + tagHTML;
             console.log('HTML: ', html);
+            /* [NEW] check if this link is NOT (!...) already in allTags */
+            if (!allTags.hasOwnProperty(tag)) {
+                /* [NEW] add tag to allTags object */
+                allTags[tag] = 1;
+                console.log('allTags: ', allTags);
+            } else {
+                allTags[tag]++;
+            }
             /* END LOOP: for each tag */
         }
         /* insert HTML of all the links into the tags wrapper */
@@ -121,6 +132,19 @@ function generateTags() {
         console.log('tagList: ', tagList);
         /* END LOOP: for every article: */
     }
+    /* [NEW] find list of tags in right column */
+    const tagList = document.querySelector('.tags');
+    /* [NEW] create variable for all links HTML code */
+    let allTagsHTML = '';
+    /* [NEW] START LOOP: for each tag in allTAgs: */
+    for (let tag in allTags) {
+        /* [NEW] generate code of a link and add it to all TagsHTML */
+        allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ') ' + '</a></li>';
+        /* [NEW] END LOOP: for each tag in allTAgs: */
+    }
+    /* [NEW] add html from allTAgsHTML to tagList */
+    tagList.innerHTML = allTagsHTML;
+    console.log('tagList2a: ', tagList);
 }
 
 function tagClickHandler(event) {
