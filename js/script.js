@@ -5,7 +5,9 @@ const optArticleSelector = '.post',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
     optArticleAuthorSelector = '.post-author',
-    optTagsListSelector = '.tags.list'
+    optTagsListSelector = '.tags.list',
+    optCloudClassCount = 5,
+    optCloudClassPrefix = 'tag-size-';
 
 function titleClickHandler(event) {
     //console.log('Link was clicked!');
@@ -59,8 +61,8 @@ function generateTitleLinks(customSelector = '') {
     /* for each article */
     const articles = document.querySelectorAll(optArticleSelector + customSelector);
     //console.log('Articles:', articles);
-    console.log('customSelector:', customSelector);
-    console.log('optArticleSelector + customSelector:', optArticleSelector + customSelector);
+    //console.log('customSelector:', customSelector);
+    //console.log('optArticleSelector + customSelector:', optArticleSelector + customSelector);
     let html = '';
     for (let article of articles) {
         /* get the article id */
@@ -98,35 +100,45 @@ function calculateTagsParams(tags) {
     return params;
 }
 
+function calculateTagClass(count, params) {
+
+    const normalizedCount = count - params.min,
+        normalizedMax = params.max - params.min,
+        percentage = normalizedCount / normalizedMax,
+        classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1),
+        CloudClassName = optCloudClassPrefix + classNumber;
+    //console.log('CloudClassName', CloudClassName);
+    return CloudClassName;
+}
+
 function generateTags() {
     /* [NEW] create a new variable allTags with an empty object */
     let allTags = {};
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
-    console.log('Articles:', articles);
+    //console.log('Articles:', articles);
     /* START LOOP: for every article: */
     for (let a of articles) {
-        console.log('a: ', a);
         /* find tags wrapper */
         const tagList = a.querySelector(optArticleTagsSelector);
-        console.log('Tag List:', tagList);
+        //console.log('Tag List:', tagList);
         /* make html variable with empty string */
         let html = '';
         /* get tags from data-tags attribute */
         const articleTags = a.getAttribute("data-tags");
-        console.log('Article Tags: ', articleTags);
+        //console.log('Article Tags: ', articleTags);
         /* split tags into array */
         const articleTagsArray = articleTags.split(' ');
-        console.log('Article Tags Array: ', articleTagsArray);
+        //console.log('Article Tags Array: ', articleTagsArray);
         /* START LOOP: for each tag */
         for (let tag of articleTagsArray) {
-            console.log('Tag: ', tag);
+            //console.log('Tag: ', tag);
             /* generate HTML of the link */
             const tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
-            console.log('tagHTML: ', tagHTML);
+            //console.log('tagHTML: ', tagHTML);
             /* add generated code to html variable */
             html = html + tagHTML;
-            console.log('HTML: ', html);
+            //console.log('HTML: ', html);
             /* [NEW] check if this link is NOT (!...) already in allTags */
             if (!allTags.hasOwnProperty(tag)) {
                 /* [NEW] add tag to allTags object */
@@ -151,7 +163,7 @@ function generateTags() {
     /* [NEW] START LOOP: for each tag in allTAgs: */
     for (let tag in allTags) {
         /* [NEW] generate code of a link and add it to all TagsHTML */
-        allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ') ' + '</a></li>';
+        allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ') ' + '</a></li>';
         /* [NEW] END LOOP: for each tag in allTAgs: */
     }
     /* [NEW] add html from allTAgsHTML to tagList */
@@ -211,15 +223,15 @@ function generateAuthors() {
     for (let art of articles) {
         // find authors wrapper */
         const authorWrapper = art.querySelector(optArticleAuthorSelector);
-        console.log('Author wrapper: ', authorWrapper);
+        //console.log('Author wrapper: ', authorWrapper);
         /* get author from data-author attribute */
         const articleAuthor = art.getAttribute("data-author");
-        console.log('Article Author: ', articleAuthor);
+        //console.log('Article Author: ', articleAuthor);
         /* generate the author link */
         const authorHREF = articleAuthor.replace(' ', '-'),
             authorLink = '<a href="#author' + authorHREF + '">' + 'by ' + articleAuthor + '</a>';
-        console.log('authorHREF: ', authorHREF);
-        console.log('authorLink: ', authorLink);
+        //console.log('authorHREF: ', authorHREF);
+        //console.log('authorLink: ', authorLink);
         /* insert HTML of all the links into the authors wrapper */
         authorWrapper.innerHTML = authorLink;
     }
@@ -230,10 +242,10 @@ function authorClickHandler(event) {
     const clickedElement = this;
     /* make a new constant "href" and read the attribute "href" of the clicked element */
     const href = clickedElement.getAttribute("href");
-    console.log('href: ', href);
+    //console.log('href: ', href);
     /* find all author links with class active */
     const activeAuthorLinks = document.querySelectorAll('a.active[href^="#author"]');
-    console.log('activeAuthorLinks: ', activeAuthorLinks);
+    //console.log('activeAuthorLinks: ', activeAuthorLinks);
     /* START LOOP: for each active author link remove class active*/
     for (let activeAuthor of activeAuthorLinks) {
         activeAuthor.classList.remove('active');
@@ -241,14 +253,14 @@ function authorClickHandler(event) {
     }
     /* find all author links with "href" attribute equal to the "href" constant */
     const equalAuthors = document.querySelectorAll('a[href="' + href + '"]');
-    console.log('Equal Authors: ', equalAuthors);
+    //console.log('Equal Authors: ', equalAuthors);
     /* START LOOP: for each found author link add class active*/
     for (let equalAuthor of equalAuthors) {
         equalAuthor.classList.add('active');
         /* END LOOP */
     }
     const authorName = clickedElement.innerHTML.replace('by ', '');
-    console.log('authorName: ', authorName);
+    //console.log('authorName: ', authorName);
     /* execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-author="' + authorName + '"]');
 }
