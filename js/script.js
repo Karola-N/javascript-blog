@@ -6,6 +6,7 @@ const optArticleSelector = '.post',
     optArticleTagsSelector = '.post-tags .list',
     optArticleAuthorSelector = '.post-author',
     optTagsListSelector = '.tags.list',
+    optAuthorsListSelector = '.tags.authors',
     optCloudClassCount = 5,
     optCloudClassPrefix = 'tag-size-';
 
@@ -217,6 +218,8 @@ function addClickListenersToTags() {
 }
 
 function generateAuthors() {
+    /* [NEW] create a new variable allAuthors with an empty object */
+    let allAuthors = {};
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
     /* START LOOP: for every article: */
@@ -232,9 +235,34 @@ function generateAuthors() {
             authorLink = '<a href="#author' + authorHREF + '">' + 'by ' + articleAuthor + '</a>';
         //console.log('authorHREF: ', authorHREF);
         //console.log('authorLink: ', authorLink);
+        /* [NEW] check if this link is NOT (!...) already in allAuthors */
+        if (!allAuthors.hasOwnProperty(articleAuthor)) {
+            /* [NEW] add tag to allTags object */
+            allAuthors[articleAuthor] = 1;
+        } else {
+            allAuthors[articleAuthor]++;
+        }
         /* insert HTML of all the links into the authors wrapper */
         authorWrapper.innerHTML = authorLink;
     }
+    console.log('allAuthors: ', allAuthors);
+    /* [NEW] find list of authors in right column */
+    const authorList = document.querySelector('.authors');
+    console.log('authorList: ', authorList);
+    /* [NEW] create variable for all links HTML code */
+    let allAuthorsHTML = '';
+    // const authorsParams = calculateTagsParams(allAuthorsHTML);
+    // console.log('authorsParams: ', authorsParams);
+    /* [NEW] START LOOP: for each author in allAuthors: */
+    for (let author in allAuthors) {
+        /* [NEW] generate code of a link and add it to all authorsHTML */
+        allAuthorsHTML += '<li><a href="#author-' + author + '" class="' + /* calculateTagClass(allTags[tag], tagsParams) + */ '">' + author + '</a></li>';
+        /* [NEW] END LOOP: for each tag in allTAgs: */
+        console.log('allAuthorsHTML: ', allAuthorsHTML);
+    }
+    /* [NEW] add html from allTAgsHTML to tagList */
+    authorList.innerHTML = allAuthorsHTML;
+    console.log('sidebarAuthorList: ', authorList);
 }
 
 function authorClickHandler(event) {

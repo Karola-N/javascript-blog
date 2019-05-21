@@ -135,6 +135,9 @@ body {
         position: absolute;
     }
     transition: opacity .6s ease-in-out;
+    a[href ^="#author"] {
+        color: $color-dark;
+    }
 }
 
 .post-author {
@@ -174,10 +177,6 @@ body {
 a {
     color: $color-link;
     text-decoration: none;
-}
-
-a[href ^="#author"] {
-    color: $color-dark;
 }
 
 a[href ^="#tag-"] {

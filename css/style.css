@@ -113,6 +113,10 @@ body {
   position: absolute;
 }
 
+.post a[href^="#author"] {
+  color: #444;
+}
+
 .post-author {
   font-style: italic;
 }
@@ -150,10 +154,6 @@ body {
 a {
   color: #227093;
   text-decoration: none;
-}
-
-a[href^="#author"] {
-  color: #444;
 }
 
 a[href^="#tag-"] {
