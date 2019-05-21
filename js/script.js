@@ -163,7 +163,7 @@ function generateTags() {
     /* [NEW] START LOOP: for each tag in allTAgs: */
     for (let tag in allTags) {
         /* [NEW] generate code of a link and add it to all TagsHTML */
-        allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ') ' + '</a></li>';
+        allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + '</a></li>';
         /* [NEW] END LOOP: for each tag in allTAgs: */
     }
     /* [NEW] add html from allTAgsHTML to tagList */

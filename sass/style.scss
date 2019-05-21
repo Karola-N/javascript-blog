@@ -5,6 +5,7 @@
 $color-light: #f9f9fb;
 $color-dark: #444;
 $color-logo: #ED4C67;
+$color-link: #227093;
 $font-logo: 'Sacramento',
 cursive;
 $font-header: 'Oswald',
@@ -107,6 +108,10 @@ body {
     }
 }
 
+.tags li {
+    display: inline-block;
+}
+
 
 /* Authors */
 
@@ -161,4 +166,40 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background-color: lightgrey;
+}
+
+
+/* Tags*/
+
+a {
+    color: $color-link;
+    text-decoration: none;
+}
+
+a[href ^="#author"] {
+    color: $color-dark;
+}
+
+a[href ^="#tag-"] {
+    padding-right: 8px;
+}
+
+a[class="tag-size-5"] {
+    font-size: 200%;
+}
+
+a[class="tag-size-4"] {
+    font-size: 180%;
+}
+
+a[class="tag-size-3"] {
+    font-size: 160%;
+}
+
+a[class="tag-size-2"] {
+    font-size: 130%;
+}
+
+a[class="tag-size-1"] {
+    font-size: 90%;
 }
