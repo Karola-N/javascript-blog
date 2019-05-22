@@ -208,7 +208,7 @@ function tagClickHandler(event) {
 
 function addClickListenersToTags() {
     /* find all links to tags */
-    const links = document.querySelectorAll('.post-tags a');
+    const links = document.querySelectorAll('.post-tags a, .tags a');
     /* START LOOP: for each link */
     for (let link of links) {
         /* add tagClickHandler as event listener for that link */
@@ -232,9 +232,9 @@ function generateAuthors() {
         //console.log('Article Author: ', articleAuthor);
         /* generate the author link */
         const authorHREF = articleAuthor.replace(' ', '-'),
-            authorLink = '<a href="#author' + authorHREF + '">' + 'by ' + articleAuthor + '</a>';
+            authorLink = '<a href="#author-' + authorHREF + '">' + 'by ' + articleAuthor + '</a>';
         //console.log('authorHREF: ', authorHREF);
-        //console.log('authorLink: ', authorLink);
+        console.log('authorLink: ', authorLink);
         /* [NEW] check if this link is NOT (!...) already in allAuthors */
         if (!allAuthors.hasOwnProperty(articleAuthor)) {
             /* [NEW] add tag to allTags object */
@@ -257,7 +257,12 @@ function generateAuthors() {
     for (let author in allAuthors) {
         /* [NEW] generate code of a link and add it to all authorsHTML */
         const authorTag = author.replace(' ', '-');
-        allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+        const linkDescription = author + ' (' + allAuthors[author] + ')';
+        console.log('linkDescription: ', linkDescription);
+        //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + linkDescription + '</a></li>';
+        allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>';
+        //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+        // allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>' + ' (' + allAuthors[author] + ')';
         /* [NEW] END LOOP: for each tag in allTAgs: */
         console.log('allAuthorsHTML: ', allAuthorsHTML);
     }
@@ -296,7 +301,7 @@ function authorClickHandler(event) {
 
 function addClickListenersToAuthors() {
     /* find all links to authorss */
-    const links = document.querySelectorAll('.post-author a');
+    const links = document.querySelectorAll('.post-author a, .list.authors a');
     /* START LOOP: for each link */
     for (let link of links) {
         /* add authorClickHandler as event listener for that link */

@@ -135,19 +135,26 @@ body {
         position: absolute;
     }
     transition: opacity .6s ease-in-out;
-    a[href ^="#author"] {
-        color: $color-dark;
-    }
 }
 
 .post-author {
     font-style: italic;
+    a {
+        color: $color-dark;
+    }
 }
 
 .post-tags {
     display: flex;
     p {
         margin: 0 10px 0 0;
+    }
+}
+
+.post-tags,
+.tags {
+    a {
+        padding-right: 8px;
     }
 }
 
@@ -179,26 +186,22 @@ a {
     text-decoration: none;
 }
 
-a[href ^="#tag-"] {
-    padding-right: 8px;
-}
-
-a[class="tag-size-5"] {
+a.tag-size-5 {
     font-size: 200%;
 }
 
-a[class="tag-size-4"] {
+a.tag-size-4 {
     font-size: 180%;
 }
 
-a[class="tag-size-3"] {
+a.tag-size-3 {
     font-size: 160%;
 }
 
-a[class="tag-size-2"] {
+a.tag-size-2 {
     font-size: 130%;
 }
 
-a[class="tag-size-1"] {
+a.tag-size-1 {
     font-size: 90%;
 }
