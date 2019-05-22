@@ -301,7 +301,7 @@ function authorClickHandler(event) {
 
 function addClickListenersToAuthors() {
     /* find all links to authorss */
-    const links = document.querySelectorAll('.post-author a, .list.authors a');
+    const links = document.querySelectorAll('.post-author a, .authors a');
     /* START LOOP: for each link */
     for (let link of links) {
         /* add authorClickHandler as event listener for that link */
