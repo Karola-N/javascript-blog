@@ -92,11 +92,13 @@ function generateTitleLinks(customSelector = '') {
 }
 
 function calculateTagsParams(tags) {
-    const params = { min: 999999, max: 0 };
+    const params = { min: false, max: false };
     for (let tag in tags) {
         console.log(tag + ' is used ' + tags[tag] + ' times');
-        params.max = Math.max(tags[tag], params.max),
-            params.min = Math.min(tags[tag], params.min);
+        //params.max = Math.max(tags[tag], params.max);
+        //params.min = Math.min(tags[tag], params.min);
+        params.max = params.max !== false ? Math.max(tags[tag], params.max) : tags[tag];
+        params.min = params.min !== false ? Math.min(tags[tag], params.min) : tags[tag];
     }
     return params;
 }
@@ -260,9 +262,10 @@ function generateAuthors() {
         const linkDescription = author + ' (' + allAuthors[author] + ')';
         console.log('linkDescription: ', linkDescription);
         //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + linkDescription + '</a></li>';
-        allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>';
+        //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>';
         //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
-        // allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>' + ' (' + allAuthors[author] + ')';
+        //allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a></li>' + ' (' + allAuthors[author] + ')';
+        allAuthorsHTML += '<li><a href="#author-' + authorTag + '">' + author + '</a> (' + allAuthors[author] + ')</li>';
         /* [NEW] END LOOP: for each tag in allTAgs: */
         console.log('allAuthorsHTML: ', allAuthorsHTML);
     }
