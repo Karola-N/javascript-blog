@@ -12,7 +12,8 @@ const optArticleSelector = '.post',
     templates = {
         articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
         tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
-        articleAuthorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
+        articleAuthorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+        tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
     };
 
 function titleClickHandler(event) {
@@ -169,17 +170,25 @@ function generateTags() {
     /* [NEW] find list of tags in right column */
     const tagList = document.querySelector('.tags');
     /* [NEW] create variable for all links HTML code */
-    let allTagsHTML = '';
+    /* first version: let allTagsHTML = ''; */
+    const allTagsData = { tags: [] };
     const tagsParams = calculateTagsParams(allTags);
     console.log('tagsParams: ', tagsParams);
     /* [NEW] START LOOP: for each tag in allTAgs: */
     for (let tag in allTags) {
         /* [NEW] generate code of a link and add it to all TagsHTML */
-        allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + '</a></li>';
+        /* first version: allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + '</a></li>'; */
+        allTagsData.tags.push({
+            tag: tag,
+            count: allTags[tag],
+            className: calculateTagClass(allTags[tag], tagsParams)
+        });
         /* [NEW] END LOOP: for each tag in allTAgs: */
     }
     /* [NEW] add html from allTAgsHTML to tagList */
-    tagList.innerHTML = allTagsHTML;
+    /* first version: tagList.innerHTML = allTagsHTML; */
+    tagList.innerHTML = templates.tagCloudLink(allTagsData);
+    console.log('allTagsData: ', allTagsData);
     console.log('sidebarTagList: ', tagList);
 }
 
