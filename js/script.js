@@ -8,7 +8,12 @@ const optArticleSelector = '.post',
     optTagsListSelector = '.tags.list',
     optAuthorsListSelector = '.authors.list',
     optCloudClassCount = 5,
-    optCloudClassPrefix = 'tag-size-';
+    optCloudClassPrefix = 'tag-size-',
+    templates = {
+        articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+        tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+        articleAuthorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
+    };
 
 function titleClickHandler(event) {
     //console.log('Link was clicked!');
@@ -75,7 +80,9 @@ function generateTitleLinks(customSelector = '') {
         //console.log('Article Title:', articleTitle);
 
         /* create HTML of the link */
-        const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+        /* first version: const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>'; */
+        const linkHTMLData = { id: articleId, title: articleTitle },
+            linkHTML = templates.articleLink(linkHTMLData);
         //console.log('Link HTML:', linkHTML);
 
         /* insert link into titleList */
@@ -137,7 +144,9 @@ function generateTags() {
         for (let tag of articleTagsArray) {
             //console.log('Tag: ', tag);
             /* generate HTML of the link */
-            const tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+            /* firt version: const tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>'; */
+            const linkHTMLData = { id: tag, title: tag },
+                tagHTML = templates.tagLink(linkHTMLData);
             //console.log('tagHTML: ', tagHTML);
             /* add generated code to html variable */
             html = html + tagHTML;
@@ -234,7 +243,9 @@ function generateAuthors() {
         //console.log('Article Author: ', articleAuthor);
         /* generate the author link */
         const authorHREF = articleAuthor.replace(' ', '-'),
-            authorLink = '<a href="#author-' + authorHREF + '">' + 'by ' + articleAuthor + '</a>';
+            /* first version: authorLink = '<a href="#author-' + authorHREF + '">' + 'by ' + articleAuthor + '</a>'; */
+            linkHTMLData = { id: authorHREF, title: articleAuthor },
+            authorLink = templates.articleAuthorLink(linkHTMLData);
         //console.log('authorHREF: ', authorHREF);
         console.log('authorLink: ', authorLink);
         /* [NEW] check if this link is NOT (!...) already in allAuthors */
